@@ -1,7 +1,6 @@
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
 import Button from '@mui/material/Button';
 import Header from "../../components/Header";
 import { Link } from "react-router-dom";
@@ -10,17 +9,20 @@ import { useEffect, useState } from "react";
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const[mockData, setMockData] = useState({});
-  useEffect(()=>{
+  const [mockData, setMockData] = useState([]);
+
+  useEffect(() => {
     getMockData();
-  },[]);
-  const getMockData = async() => {
-    const mock = await fetch("");
-    const mockJson = await mock.json();
-    setMockData(mockJson);
-  }
+  }, []);
+
+  const getMockData = async () => {
+    const response = await fetch("http://127.0.0.1:8000/student");
+    const data = await response.json();
+    console.log(data);
+    setMockData(data);
+  };
+
   const columns = [
-    { field: "id", headerName: "ID" },
     {
       field: "name",
       headerName: "Name",
@@ -28,15 +30,18 @@ const Team = () => {
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "batch",
+      headerName: "Batch",
+      flex: 1,
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
+      field: "batch_year",
+      headerName: "Batch Year",
+      flex: 1,
+    },
+    {
+      field: "category_name",
+      headerName: "Category Name",
       flex: 1,
     },
     {
@@ -45,11 +50,21 @@ const Team = () => {
       flex: 1,
     },
     {
+      field: "reg_no",
+      headerName: "Reg. No.",
+      flex: 1,
+    },
+    {
+      field: "attempted",
+      headerName: "Attempted",
+      flex: 1,
+    },
+    {
       field: "view",
       headerName: "Result",
       flex: 1,
       renderCell: (params) => {
-        const { id } = params.row;
+        const { reg_no } = params.row;
         return (
           <Box
             width="60%"
@@ -59,18 +74,23 @@ const Team = () => {
             justifyContent="center"
             borderRadius="4px"
           >
-            <Button style = {{background : "#5656c9", color : "white"}}component={Link} to={`/teams/${id}`} variant="outlined">
+            <Button
+              style={{ background: "#5656c9", color: "white", padding : "6px 50px"}}
+              component={Link}
+              to={`/teams/${reg_no}`}
+              variant="outlined"
+            >
               View Details
             </Button>
           </Box>
         );
       },
-    },    
+    },
   ];
 
   return (
     <Box m="20px">
-      <Header title="TEAM" subtitle="Managing the Team Members" />
+      <Header title="Student" subtitle="Students details List" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -100,8 +120,11 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
-       
+        <DataGrid
+          rows={mockData}
+          columns={columns}
+          getRowId={(row) => row.reg_no}
+        />
       </Box>
     </Box>
   );

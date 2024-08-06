@@ -46,7 +46,7 @@ class Command(BaseCommand):
                     batch=batch[i],
                     category_name=category[i],
                     attempted=attempted[i],
-                    tests={
+                    tests=[{
                         "Mock Test-02": {
                             "status": mock_test_status[i],
                             "marks": mock_test_marks[i],
@@ -54,7 +54,7 @@ class Command(BaseCommand):
                             "percentage": mock_test_percentage[i],
                             "qualified": mock_test_qualified[i]
                         }
-                    }
+                    }]
                 )
                 students_created += 1
 

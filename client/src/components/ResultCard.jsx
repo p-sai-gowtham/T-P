@@ -1,42 +1,45 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-  >
-    •
-  </Box>
-);
+export default function ResultCard({ test }) {
+  const testName = Object.keys(test)[0];
+  const testData = test[testName];
 
-export default function ResultCard() {
+  const hasData = testData && testData.marks !== "-";
+
+  console.log("ResultCard Data:", test);
+
   return (
-    <Card sx={{ minWidth: 275 , margin : "12px"}}>
+    <Card 
+      sx={{ 
+        minWidth: 275, 
+        margin: "12px", 
+        backgroundColor: !hasData ? 'grey' : (testData.qualified === 'NOT QUALIFIED' ? '#ee4c4c' : 'green')
+      }}
+    >
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          Word of the Day
+        <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+          {testName}
         </Typography>
-        <Typography variant="h5" component="div">
-          be{bull}nev{bull}o{bull}lent
+        <Typography style={{ paddingBottom: "4px" }} variant="h6" component="div">
+          Marks: {hasData ? testData.marks : 'N/A'}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          adjective
+        <Typography style={{ paddingBottom: "4px" }} variant="h6" component="div">
+          Max Marks: {hasData ? testData.max_marks : 'N/A'}
         </Typography>
-        <Typography variant="body2">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+        <Typography style={{ paddingBottom: "4px" }} variant="h6" component="div">
+          Percentage: {hasData ? testData.percentage : 'N/A'}
+        </Typography>
+        <Typography style={{ paddingBottom: "4px" }} variant="h6" component="div">
+          Qualified: {hasData ? testData.qualified : 'N/A'}
+        </Typography>
+        <Typography style={{ paddingBottom: "4px" }} variant="h6" component="div">
+          Status: {hasData ? testData.status : 'N/A'}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
     </Card>
   );
 }

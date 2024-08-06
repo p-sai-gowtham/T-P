@@ -15,29 +15,29 @@ const bull = (
   </Box>
 );
 
-export default function StudentCard() {
+export default function StudentCard({details}) {
   return (
     <Box sx={{ minWidth: 275, margin:"12px"}}>
-      <Card variant="outlined">
+      <Card variant="outlined" style={{backgroundColor : "#5656c9"}}>
         <CardContent>
-          <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            Word of the Day
+          <Typography sx={{ fontSize: 40 }} color="text.secondary" gutterBottom>
+            {details.name}
+            ({details.reg_no})
           </Typography>
-          <Typography variant="h5" component="div">
-            be{bull}nev{bull}o{bull}lent
+          <Typography style={{paddingBottom : "4px"}}variant="h5" component="div">
+            Email : {details.email}
           </Typography>
-          <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            adjective
+          <Typography style={{paddingBottom : "4px"}} variant="h5" component="div">
+            Section : {details.batch}
           </Typography>
-          <Typography variant="body2">
-            well meaning and kindly.
-            <br />
-            {'"a benevolent smile"'}
+          <Typography style={{paddingBottom : "4px"}} variant="h5" component="div">
+            Batch Year : {details.batch_year}
+          </Typography>
+          <Typography style={{paddingBottom : "4px"}} variant="h5" component="div">
+            Batch Year : {details.category_name}
           </Typography>
         </CardContent>
-        <CardActions>
-          <Button size="small">Learn More</Button>
-        </CardActions>
+       
       </Card>
     </Box>
   );

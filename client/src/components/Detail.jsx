@@ -1,100 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import Box from '@mui/material/Box';
 import StudentCard from "./StudentCard";
 import ResultCard from "./ResultCard";
-import { useState, useEffect } from "react";
-// Sample data
-const examCard = [
-  {
-    id: 1,
-    name: "Jon Snow",
-    email: "jonsnow@gmail.com",
-    age: 35,
-    phone: "(665)121-5454",
-    access: "admin",
-  },
-  {
-    id: 2,
-    name: "Cersei Lannister",
-    email: "cerseilannister@gmail.com",
-    age: 42,
-    phone: "(421)314-2288",
-    access: "manager",
-  },
-  {
-    id: 3,
-    name: "Cersei Lannister",
-    email: "cerseilannister@gmail.com",
-    age: 42,
-    phone: "(421)314-2288",
-    access: "manager",
-  },
-  {
-    id: 4,
-    name: "Cersei Lannister",
-    email: "cerseilannister@gmail.com",
-    age: 42,
-    phone: "(421)314-2288",
-    access: "manager",
-  },
-  {
-    id: 5,
-    name: "Cersei Lannister",
-    email: "cerseilannister@gmail.com",
-    age: 42,
-    phone: "(421)314-2288",
-    access: "manager",
-  },
-  {
-    id: 6,
-    name: "Cersei Lannister",
-    email: "cerseilannister@gmail.com",
-    age: 42,
-    phone: "(421)314-2288",
-    access: "manager",
-  },
-  {
-    id: 7,
-    name: "Cersei Lannister",
-    email: "cerseilannister@gmail.com",
-    age: 42,
-    phone: "(421)314-2288",
-    access: "manager",
-  },
-];
 
 const Detail = () => {
+  const { id } = useParams();
   const [studentDetail, setStudentDetail] = useState({});
+  const [result, setResult] = useState([]);
+
   useEffect(() => {
     getStudentData();
-  }, []);
+  }, [id]);
+
   const getStudentData = async () => {
-    const data = await fetch("");
-    const dataJson = await data.json();
-    setStudentDetail(dataJson);
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/student/${id}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setStudentDetail(data);
+      setResult(data.tests);
+      
+    } catch (error) {
+      console.error("Error fetching student data:", error);
+    }
   };
+ 
+
   return (
-    <div>
-      <StudentCard />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}
+    <Box m="20px">
+      <StudentCard details={studentDetail} />
+      <Box
+        display="flex"
+        flexDirection="row"
+        flexWrap="wrap"
       >
-        {examCard.map((card) => (
-          <ResultCard
-            key={card.id}
-            id={card.id}
-            name={card.name}
-            email={card.email}
-            phone={card.phone}
-            access={card.access}
-          />
+        {result.map((data, index) => (
+          <ResultCard key={index} test={data} />
         ))}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
