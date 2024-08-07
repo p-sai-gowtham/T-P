@@ -61,6 +61,7 @@ class Command(BaseCommand):
                     else:
                         students_updated += 1
                         self.stdout.write(self.style.WARNING(f"Student with ID {row['ID No.']} updated"))
+                    dictionary = {}
 
                     for col in data.columns:
                         if col.startswith('Mock Test-'):
@@ -69,11 +70,15 @@ class Command(BaseCommand):
                                 test_name = parts[0]
                                 attribute = parts[1]
 
-                                if test_name not in student.tests:
-                                    student.tests[test_name] = {}
+                                if test_name not in dictionary:
+                                    dictionary[test_name] = {}
 
-                                student.tests[test_name][attribute.lower()] = row[col]
+                                if attribute.lower() not in dictionary[test_name]:
+                                    dictionary[test_name][attribute.lower()] = ''
 
+                                dictionary[test_name][attribute.lower()] = row[col] 
+
+                    student.tests.append(dictionary)
                     student.save()
 
         if students_created > 0:
