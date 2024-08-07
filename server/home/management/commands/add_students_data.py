@@ -51,7 +51,7 @@ class Command(BaseCommand):
                             'batch': row['Batch'],
                             'category_name': row['Category Name'],
                             'attempted': row['Attempted'],
-                            'tests': {}
+                            'tests': []
                         }
                     )
 
