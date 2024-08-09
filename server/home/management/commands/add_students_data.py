@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from home.models import Student
+from user.models import User
 import os
 import pandas as pd
 
@@ -42,10 +42,10 @@ class Command(BaseCommand):
                     continue
 
                 for index, row in data.iterrows():
-                    student, created = Student.objects.get_or_create(
+                    student, created = User.objects.get_or_create(
                         reg_no=row['ID No.'],
                         defaults={
-                            'name': row['Name'],
+                            'username': row['Name'],
                             'email': row['Email'],
                             'batch_year': row['Batch Year'],
                             'batch': row['Batch'],

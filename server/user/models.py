@@ -22,8 +22,14 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password=None, **extra_fields):
 
          extra_fields = {
-            "dashboard": True,
-            "admin": True,
+            "is_cse": True,
+            "is_ece": True,
+            "is_eee": True,
+            "is_mech": True,
+            "is_csse": True,
+            "is_csit": True,
+            "is_csm": True,
+            "is_student": True,
             "is_staff": True,
             "is_superuser": True,
             **extra_fields,
@@ -39,7 +45,21 @@ class User(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
-    dashboard = models.BooleanField(default=True)
-    admin = models.BooleanField(default=False)
-    
+    # dashboard = models.BooleanField(default=True)
+    # admin = models.BooleanField(default=False)
+    is_cse= models.BooleanField(default=False)
+    is_ece= models.BooleanField(default=False)
+    is_eee= models.BooleanField(default=False)
+    is_mech= models.BooleanField(default=False)
+    is_csse= models.BooleanField(default=False)
+    is_csit= models.BooleanField(default=False)
+    is_csm= models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_student = models.BooleanField(default=False)
+    reg_no = models.TextField(max_length=10,unique=True,blank=True, null=True)
+    batch_year = models.CharField(max_length=4,blank=True, null=True)
+    batch = models.TextField(max_length=6, blank=True, null=True)
+    attempted = models.IntegerField(blank=True,null=True)
+    tests = models.JSONField(blank=True,null=True)
     objects = UserManager()
+
