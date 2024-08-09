@@ -49,9 +49,8 @@ class Command(BaseCommand):
                             'email': row['Email'],
                             'batch_year': row['Batch Year'],
                             'batch': row['Batch'],
-                            'category_name': row['Category Name'],
                             'attempted': row['Attempted'],
-                            'tests': []
+                            'tests': {row['Category Name']:[]}
                         }
                     )
 
@@ -78,7 +77,7 @@ class Command(BaseCommand):
 
                                 dictionary[test_name][attribute.lower()] = row[col] 
 
-                    student.tests.append(dictionary)
+                    student.tests[row['Category Name']].append(dictionary)
                     student.save()
 
         if students_created > 0:

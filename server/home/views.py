@@ -4,6 +4,7 @@ from django.forms.models import model_to_dict
 
 
 def all_students(request):
+    
     students = Student.objects.all()
     return JsonResponse(list(students.values()), safe=False)
 
