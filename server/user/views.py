@@ -6,34 +6,30 @@ from django.contrib.auth.hashers import make_password, check_password
 
 def signin(request):
     if request.method == 'POST':
-        email = request.POST['email']
+        reg_no = request.POST['reg_no'].upper()
         password = request.POST['password']
         # Check if the user exists
-        if not User.objects.filter(email=email).exists():
+        if not User.objects.filter(reg_no=reg_no).exists():
             messages.error(request,"User doesn't exist.")
             return render(request, 'user/login.html', {'message': "User doesn't exist. Please sign up"})
         
-        user = User.objects.get(email=email)
+        user = User.objects.get(reg_no=reg_no)
         
-        authenticated_user = authenticate(email=email, password=password)
+        authenticated_user = authenticate(reg_no=reg_no, password=password)
         if authenticated_user is not None:
                 # Check the password using check_password
                 if check_password(password, authenticated_user.password):
-                    request.session['email'] = email
-                    request.session.save()
+                    
                     login(request, authenticated_user)
                     messages.success(request, 'Login Successful')
                     return redirect('/dashboard')
                 
-        messages.error(request,'Incorrect email or password')
-        return render(request, 'user/login.html', {'message': 'Incorrect email or password'})
+        messages.error(request,'Incorrect registraion number or password')
+        return render(request, 'user/login.html', {'message': 'Incorrect registration number or password'})
     
     return render(request, 'user/login.html')
 
 def logout_view(request):
-    if request.session.get('email',''):
-        del request.session['email']
-    request.session.save()
     logout(request)
     messages.success(request,'Logout Successful')
     return redirect('user:login')
