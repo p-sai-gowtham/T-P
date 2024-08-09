@@ -12,6 +12,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
 import Detail from "./components/Detail";
+import Carousel from "./components/Carousel";
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
               <Route path="/bar" element={<Bar />} />
               <Route path="/pie" element={<Pie />} />
               <Route path="/line" element={<Line />} />
-              <Route path="/faq" element={<FAQ />} />
+              <Route path="/faq" element={<Carousel/>} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/teams/:id" element={<Detail/>} />
             </Routes>

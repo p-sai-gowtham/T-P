@@ -62,6 +62,10 @@ CORS_ALLOWED_ORIGINS = [
 
 ROOT_URLCONF = 'TandP.urls'
 
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000'
+]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
