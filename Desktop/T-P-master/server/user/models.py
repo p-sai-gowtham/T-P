@@ -61,5 +61,6 @@ class User(AbstractUser):
     batch = models.TextField(max_length=6, blank=True, null=True)
     attempted = models.IntegerField(blank=True,null=True)
     tests = models.JSONField(blank=True,null=True)
+    drives = models.JSONField(blank=True,null=True)
     objects = UserManager()
-
+    

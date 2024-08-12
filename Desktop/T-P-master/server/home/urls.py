@@ -8,4 +8,5 @@ app_name= 'app'
 urlpatterns = [
     path("student", views.all_students,name="student"),
     path("student/<str:pk>", views.student),
+    path('add_drive_data',views.add_drive_data, name="add_drive_data"),
 ]

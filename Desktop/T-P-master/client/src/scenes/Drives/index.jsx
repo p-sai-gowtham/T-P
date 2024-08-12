@@ -1,4 +1,13 @@
-import { Box, useTheme, Checkbox, FormControlLabel, TextField, MenuItem, Select, Button } from "@mui/material";
+import {
+  Box,
+  useTheme,
+  Checkbox,
+  FormControlLabel,
+  TextField,
+  MenuItem,
+  Select,
+  Button,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { useEffect, useState } from "react";
@@ -7,8 +16,8 @@ const Team = () => {
   const theme = useTheme();
   const [mockData, setMockData] = useState([]);
   const [selectAll, setSelectAll] = useState(false);
-  const [companyName, setCompanyName] = useState('');
-  const [driveCount, setDriveCount] = useState(3); 
+  const [companyName, setCompanyName] = useState("");
+  const [driveCount, setDriveCount] = useState(3);
 
   useEffect(() => {
     getMockData();
@@ -26,10 +35,14 @@ const Team = () => {
     setMockData((prevData) =>
       prevData.map((row) => ({
         ...row,
-        ...Array.from({ length: driveCount }, (_, i) => `drive${i + 1}`).reduce((acc, drive) => ({
-          ...acc,
-          [drive]: isChecked,
-        }), {}),
+        ...Array.from({ length: driveCount }, (_, i) => `drive${i + 1}`).reduce(
+          (acc, drive) => ({
+            ...acc,
+            [drive]: isChecked,
+          }),
+          {}
+        ),
+        selected: isChecked,
       }))
     );
   };
@@ -43,12 +56,40 @@ const Team = () => {
     );
   };
 
+  const handleSelectedChange = (rowId) => (event) => {
+    const { checked } = event.target;
+    setMockData((prevData) =>
+      prevData.map((row) => {
+        if (row.reg_no === rowId) {
+          const updatedRow = {
+            ...row,
+            selected: checked,
+            ...Array.from({ length: driveCount }, (_, i) => `drive${i + 1}`).reduce(
+              (acc, drive) => ({
+                ...acc,
+                [drive]: checked,
+              }),
+              {}
+            ),
+          };
+          return updatedRow;
+        }
+        return row;
+      })
+    );
+  };
+
   const columns = [
     {
       field: "username",
       headerName: "Name",
       flex: 1,
       cellClassName: "name-column--cell",
+    },
+    {
+      field: "reg_no",
+      headerName: "Reg. No.",
+      flex: 1,
     },
     ...Array.from({ length: driveCount }, (_, i) => ({
       field: `drive${i + 1}`,
@@ -60,18 +101,49 @@ const Team = () => {
           onChange={handleCheckboxChange(params.row.reg_no, `drive${i + 1}`)}
         />
       ),
-    }))
+    })),
+    {
+      field: "selected",
+      headerName: "Selected",
+      flex: 1,
+      renderCell: (params) => (
+        <Checkbox
+          checked={params.row.selected || false}
+          onChange={handleSelectedChange(params.row.reg_no)}
+        />
+      ),
+    },
   ];
 
   const handleSubmit = () => {
     const results = mockData.map((row) => {
-      const checkedDrives = Array.from({ length: driveCount }, (_, i) => `drive${i + 1}`).filter(drive => row[drive]);
+      const checkedDrives = Array.from(
+        { length: driveCount },
+        (_, i) => `drive${i + 1}`
+      ).filter((drive) => row[drive]);
+
       return {
-        name: row.username,
+        reg_no: row.reg_no,
         companyName,
         checkedDrives: checkedDrives.length,
+        selected: row.selected || false,  // Include selected field in the output data
+        noOfDrives: driveCount,
       };
     });
+
+    fetch("http://127.0.0.1:8000/add_drive_data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        results: results,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error("Error:", error));
+
     console.log("Submission Data:", results);
   };
 
@@ -93,12 +165,16 @@ const Team = () => {
           fullWidth
           margin="normal"
         >
-          {[1, 2, 3, 4, 5].map(num => (
-            <MenuItem key={num} value={num}>{num} Drives</MenuItem>
+          {[1, 2, 3, 4, 5].map((num) => (
+            <MenuItem key={num} value={num}>
+              {num} Drives
+            </MenuItem>
           ))}
         </Select>
         <FormControlLabel
-          control={<Checkbox checked={selectAll} onChange={handleSelectAllChange} />}
+          control={
+            <Checkbox checked={selectAll} onChange={handleSelectAllChange} />
+          }
           label="Select All"
         />
       </Box>
@@ -140,12 +216,12 @@ const Team = () => {
       <Box mt={2} display="flex" justifyContent="flex-end">
         <Button
           variant="contained"
-          sx={{ 
-            backgroundColor: '#67a761', 
-            padding: '6px 50px',
-            margin: '0px 15px',
-            '&:hover': {
-              backgroundColor: '#558c4f',
+          sx={{
+            backgroundColor: "#67a761",
+            padding: "6px 50px",
+            margin: "0px 15px",
+            "&:hover": {
+              backgroundColor: "#558c4f",
             },
           }}
           onClick={handleSubmit}
