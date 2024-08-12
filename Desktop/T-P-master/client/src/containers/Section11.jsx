@@ -1,6 +1,5 @@
 import { Box, Container, Grid } from "@mui/material";
 import React from "react";
-import OutlinedButton from "../components/Buttons/OutlinedButton";
 import Title from "../components/Title";
 import { Section11Content } from "../utils/content";
 

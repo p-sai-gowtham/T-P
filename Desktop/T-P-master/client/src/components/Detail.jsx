@@ -6,8 +6,8 @@ import ResultCard from "./ResultCard";
 
 const Detail = () => {
   const { id } = useParams();
-  const [studentDetail, setStudentDetail] = useState({});
-  const [result, setResult] = useState([]);
+  const [studentDetail, setStudentDetail] = useState(null);
+  const [result, setResult] = useState(null);
 
   useEffect(() => {
     getStudentData();
@@ -21,26 +21,43 @@ const Detail = () => {
       }
       const data = await response.json();
       setStudentDetail(data);
-      setResult(data.tests);
-      
+      setResult(data.tests || {}); // Assuming `tests` is a property of the fetched data
     } catch (error) {
       console.error("Error fetching student data:", error);
+      setStudentDetail(null);
+      setResult(null);
     }
   };
- 
+
+  // Conditional rendering for no data found
+  if (!studentDetail || !result || Object.keys(result).length === 0) {
+    return (
+      <Box m="20px">
+        <h2>No data found</h2>
+      </Box>
+    );
+  }
 
   return (
     <Box m="20px">
-      <StudentCard details={studentDetail} />
-      <Box
-        display="flex"
-        flexDirection="row"
-        flexWrap="wrap"
-      >
-        {result.map((data, index) => (
-          <ResultCard key={index} test={data} />
-        ))}
-      </Box>
+      <StudentCard details={studentDetail} /> 
+      {Object.entries(result).map(([companyName, testArray], index) => (
+        <div key={index}>
+          <h2>{companyName}</h2>
+          <div style={{ display: 'flex' }}>
+            {testArray.map((testObj, testIndex) => {
+              const [testName, testData] = Object.entries(testObj)[0];
+              return (
+                <ResultCard 
+                  key={testIndex} 
+                  title={testName} 
+                  test={testData} 
+                />
+              );
+            })}
+          </div>
+        </div>
+      ))}
     </Box>
   );
 };

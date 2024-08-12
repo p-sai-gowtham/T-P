@@ -16,6 +16,7 @@ import Carousel from "./components/Carousel";
 import SigninMain from "./pages/SigninMain";
 import Home from "./pages/Home";
 import Swap from "./pages/Swap";
+import DriveData from "./scenes/Drives";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -40,6 +41,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/swap" element={<Swap />} />
               <Route path="/signin" element={<SigninMain />} />
+              <Route path="/drives" element={<DriveData />} />
             </Routes>
           </main>
         </div>

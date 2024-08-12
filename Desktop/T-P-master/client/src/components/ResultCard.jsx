@@ -4,13 +4,11 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-export default function ResultCard({ test }) {
-  const testName = Object.keys(test)[0];
-  const testData = test[testName];
+export default function ResultCard({ title, test }) {
+  const testName = title;
+  const testData = test;
 
   const hasData = testData && testData.marks !== "-";
-
-  console.log("ResultCard Data:", test);
 
   return (
     <Card 
@@ -28,7 +26,7 @@ export default function ResultCard({ test }) {
           Marks: {hasData ? testData.marks : 'N/A'}
         </Typography>
         <Typography style={{ paddingBottom: "4px" }} variant="h6" component="div">
-          Max Marks: {hasData ? testData.max_marks : 'N/A'}
+          Max Marks: {hasData ? testData.max : 'N/A'}
         </Typography>
         <Typography style={{ paddingBottom: "4px" }} variant="h6" component="div">
           Percentage: {hasData ? testData.percentage : 'N/A'}
@@ -43,3 +41,5 @@ export default function ResultCard({ test }) {
     </Card>
   );
 }
+
+

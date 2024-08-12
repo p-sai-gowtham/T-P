@@ -224,9 +224,9 @@ export const section9Content = {
       image: Sec9Image1,
     },
     {
-      title: "Placement Details",
+      title: "Drives Details",
       subtitle:
-        "Get all the placement details in one place",
+        "Get all the drives details in one place",
       image: Sec9Image2,
     },
   ],

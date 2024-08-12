@@ -21,7 +21,7 @@ export default function StudentCard({details}) {
       <Card variant="outlined" style={{backgroundColor : "#5656c9"}}>
         <CardContent>
           <Typography sx={{ fontSize: 40 }} color="text.secondary" gutterBottom>
-            {details.name}
+            {details.username}
             ({details.reg_no})
           </Typography>
           <Typography style={{paddingBottom : "4px"}}variant="h5" component="div">
@@ -32,9 +32,6 @@ export default function StudentCard({details}) {
           </Typography>
           <Typography style={{paddingBottom : "4px"}} variant="h5" component="div">
             Batch Year : {details.batch_year}
-          </Typography>
-          <Typography style={{paddingBottom : "4px"}} variant="h5" component="div">
-            Batch Year : {details.category_name}
           </Typography>
         </CardContent>
        

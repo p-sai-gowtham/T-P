@@ -3,7 +3,10 @@ import React from "react";
 import OutlinedButton from "../Buttons/OutlinedButton";
 import Title from "../Title";
 import {Link} from "react-router-dom";
-const ServiceCard = ({ title, subtitle, image }) => {
+const ServiceCard = ({ title = "", subtitle, image }) => {
+  const cleanTitle = title.trim();
+  const isExamDataReports = cleanTitle === "Exam Data Reports";
+
   return (
     <Box
       sx={{
@@ -21,7 +24,7 @@ const ServiceCard = ({ title, subtitle, image }) => {
           WebkitMask:
             "linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0)",
           WebkitMaskComposite: "xor",
-          maskComposite: "exlude",
+          maskComposite: "exclude",
         },
       }}
     >
@@ -43,9 +46,9 @@ const ServiceCard = ({ title, subtitle, image }) => {
           }}
         />
 
-        <Link to="/team"><OutlinedButton arrow fit>
-          Learn more
-        </OutlinedButton></Link>
+        <Link to={isExamDataReports ? "/team" : "/drives"}>
+          <OutlinedButton>View More</OutlinedButton>
+        </Link>
       </Stack>
     </Box>
   );

@@ -11,6 +11,7 @@ import Section9 from "../containers/Section9";
 
 const Home = () => {
   return (
+
     <div>
       {/* Navbar */}
       <Navbar />
@@ -34,6 +35,7 @@ const Home = () => {
         <Footer />
       </Box>
     </div>
+    
   );
 };
 

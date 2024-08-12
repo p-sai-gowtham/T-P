@@ -24,7 +24,7 @@ const Team = () => {
 
   const columns = [
     {
-      field: "name",
+      field: "username",
       headerName: "Name",
       flex: 1,
       cellClassName: "name-column--cell",
@@ -37,11 +37,6 @@ const Team = () => {
     {
       field: "batch_year",
       headerName: "Batch Year",
-      flex: 1,
-    },
-    {
-      field: "category_name",
-      headerName: "Category Name",
       flex: 1,
     },
     {

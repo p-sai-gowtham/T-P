@@ -4,24 +4,18 @@ import {
   Container,
   Hidden,
   Stack,
-  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import React from "react";
 import LaunchButton from "../components/Buttons/LaunchButton";
 import { section1Content } from "../utils/content";
-import AppleIcon from "@mui/icons-material/Apple";
-import GoogleIcon from "@mui/icons-material/Google";
 import useMeasure from "react-use-measure";
 import Title from "../components/Title";
 import hero from "../assets/images/hero.jpg";
 const {
   MainBG,
-  TreesImage,
-  CliffImage,
-  HorseImage,
-  ShootingStarImage,
+  
   title,
   subtitle,
 } = section1Content;
@@ -52,7 +46,7 @@ const Section1 = () => {
     <Box sx={{ width: "100%" }}>
       {/* Main Background */}
       <Box sx={{ position: "fixed", zIndex: -10, top: 0, left: 0, right: 0 }}>
-        <img src={hero} style={{ width: "100%", height : "40rem"}} />
+        <img src={hero} alt="hero" style={{ width: "100%", height : "40rem"}} />
       </Box>
 
       {/* backgrounds elements */}
@@ -67,56 +61,7 @@ const Section1 = () => {
           right: 0,
         }}
       >
-        <img src={MainBG} style={{ width: "100%", opacity: 0 }} />
-
-        {/* Star */}
-        <img
-          src={ShootingStarImage}
-          style={{
-            position: "absolute",
-            top: "30px",
-            right: "15%",
-            width: "500px",
-          }}
-        />
-
-        {/* Trees */}
-        <Hidden mdDown>
-          <img
-            src={TreesImage}
-            style={{
-              position: "absolute",
-              width: "100%",
-              right: 0,
-              left: 0,
-              bottom: "13%",
-            }}
-          />
-        </Hidden>
-
-        {/* Cliff */}
-        <img
-          src={CliffImage}
-          style={{
-            height: "100%",
-            position: "absolute",
-            right: 0,
-            top: 0,
-            backgroundSize: "cover",
-          }}
-        />
-
-        {/* Horse */}
-        <img
-          src={HorseImage}
-          style={{
-            position: "absolute",
-            height: "38%",
-            right: "14%",
-            bottom: "45%",
-            transform: "rotate(7deg)",
-          }}
-        />
+        <img src={MainBG} alt="main" style={{ width: "100%", opacity: 0 }} />
 
         <Box
           sx={{
