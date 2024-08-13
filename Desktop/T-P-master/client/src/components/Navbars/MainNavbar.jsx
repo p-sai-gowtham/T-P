@@ -7,15 +7,15 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import React, { Children } from "react";
+import React from "react";
 import { NAVBAR_HEIGHT } from "../../constants/index";
 import useScrollPosition from "../../hooks/useScrollPosition";
 import { navbarContent } from "../../utils/content";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CallMadeIcon from "@mui/icons-material/CallMade";
 import LanguageIcon from "@mui/icons-material/Language";
 import LaunchButton from "../Buttons/LaunchButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import { Link } from "react-router-dom";
 
 const { Logo } = navbarContent;
 
@@ -26,8 +26,9 @@ const LinkButton = ({ children, ...props }) => (
     spacing={0.2}
     sx={{
       cursor: "pointer",
-      color: "text.secondary",
-      "&:hover": { color: "text.primary" },
+      color: "white", // Set text color to white
+      fontSize: "1rem", // Increase text size
+      "&:hover": { color: "white", opacity: 0.8 }, // Optional: slight opacity change on hover
     }}
     {...props}
   >
@@ -43,8 +44,10 @@ const Navbar = () => {
 
   return (
     <AppBar 
+      position="fixed"
       elevation={0}
       sx={{
+        zIndex: theme.zIndex.drawer + 1, // Ensure it overlaps other components
         py: 1,
         height: NAVBAR_HEIGHT,
         bgcolor: scrollPosition > 10 ? "rgba(7,7,16,.7)" : "transparent",
@@ -66,7 +69,7 @@ const Navbar = () => {
           flexWrap="wrap"
         >
           {/* Logo */}
-          <img src={Logo} style={{ height: "40px", objectFit: "contain" }} />
+          <img src={Logo} style={{ height: "40px", objectFit: "contain" }} alt="Logo" />
 
           {/* Links */}
           {!isMobile && (
@@ -79,20 +82,28 @@ const Navbar = () => {
               flexWrap="wrap"
             >
               <LinkButton>
-                <Typography variant="body2">Home</Typography>
+                <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Typography variant="body2">Home</Typography>
+                </Link>
               </LinkButton>
 
               <LinkButton>
-                <Typography variant="body2">Student data</Typography>
+                <Link to="/team" style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Typography variant="body2">Student data</Typography>
+                </Link>
               </LinkButton>
 
               <LinkButton>
-                <Typography variant="body2">About</Typography>
+                <Link to="/about" style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Typography variant="body2">About</Typography>
+                </Link>
               </LinkButton>
 
               <LinkButton spacing={0.5}>
-                <Typography variant="body2">Blog</Typography>
-                <CallMadeIcon sx={{ fontSize: 12 }} />
+                <Link to="/blog" style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <Typography variant="body2">Blog</Typography>
+                </Link>
+                <CallMadeIcon sx={{ fontSize: 12, color: 'white' }} />
               </LinkButton>
             </Stack>
           )}
@@ -100,12 +111,12 @@ const Navbar = () => {
           {/* Action Buttons */}
           {isMobile ? (
             <IconButton>
-              <MenuIcon sx={{ color: "text.secondary" }} />
+              <MenuIcon sx={{ color: "white" }} />
             </IconButton>
           ) : (
             <Stack direction="row" spacing={5} alignItems="center">
               <LinkButton spacing={1}>
-                <LanguageIcon fontSize="small" />
+                <LanguageIcon fontSize="small" sx={{ color: 'white' }} />
                 <Typography variant="body2">EN</Typography>
               </LinkButton>
 
