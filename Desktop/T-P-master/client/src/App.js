@@ -15,29 +15,28 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />, // Use Home as the layout
+      element: <Home />, 
       children: [
         {
-          path: "/", // Default child route
-          element: <Body />, // Load Body content within Home's Outlet
+          path: "/", 
+          element: <Body />,
         },
         {
-          path: "team", // Route for teams
-          element: <Team />, // Load Team content within Home's Outlet
+          path: "team", 
+          element: <Team />,
         },
         {
-          path: "teams/:id", // Dynamic route for team details
-          element: <Detail />, // Load Detail component
+          path: "teams/:id",
+          element: <Detail />,
         },
         {
-          path: "drives", // Route for drives
-          element: <DriveData />, // Load DriveData component
+          path: "drives", 
+          element: <DriveData />, 
         },
         {
-          path: "signin", // Route for sign-in page
-          element: <SigninMain />, // Load SigninMain component
+          path: "signin",
+          element: <SigninMain />, 
         },
-        // Add more routes as needed
       ],
     },
   ]);

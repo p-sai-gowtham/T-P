@@ -6,22 +6,24 @@ import { Outlet, useLocation } from "react-router-dom";
 
 const Home = () => {
   const location = useLocation();
-  const NAVBAR_HEIGHT = 64; // Define the value of NAVBAR_HEIGHT
+  const NAVBAR_HEIGHT = 64;
 
   return (
     <div>
       <Navbar />
       <Box 
         sx={{ 
-          mt: `${NAVBAR_HEIGHT}px`, // Use margin-top instead of padding-top
+          mt: `${NAVBAR_HEIGHT + 20}px`,  // Adjusted margin-top for proper spacing
           bgcolor: "#161b2d", 
-          minHeight: "100vh", // Ensure the Box takes at least the full viewport height
+          minHeight: "100vh",
           position: "relative",
+          display: "flex", 
+          flexDirection: "column", // Ensures the footer stays at the bottom
         }}
       >
-        <Outlet /> 
+        <Outlet />
+        {location.pathname === "/" && <Footer />} {/* Conditionally render the Footer */}
       </Box>
-      {location.pathname === "/" && <Footer />}
     </div>
   );
 };

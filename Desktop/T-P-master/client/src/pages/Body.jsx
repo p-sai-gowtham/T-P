@@ -8,10 +8,9 @@ import Box from '@mui/material/Box';
 const Body = () => {
   return (
     <div>
-      {/* Section 1 will take the top part, possibly with an image */}
+      
       <Section1 />
 
-      {/* Apply background color starting from Section 2 */}
       <Box sx={{ bgcolor: "#161b2d", minHeight: "100vh", pt: "20px" }}>
         <Section2 />
         <Section9 />

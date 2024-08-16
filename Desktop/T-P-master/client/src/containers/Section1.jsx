@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Container,
-  Hidden,
   Stack,
   useMediaQuery,
   useTheme,
@@ -12,10 +11,10 @@ import LaunchButton from "../components/Buttons/LaunchButton";
 import { section1Content } from "../utils/content";
 import useMeasure from "react-use-measure";
 import Title from "../components/Title";
-import hero from "../assets/images/hero.jpg";
+import hero from "../assets/images/herovideo.mp4";
+
 const {
   MainBG,
-  
   title,
   subtitle,
 } = section1Content;
@@ -38,15 +37,31 @@ const CustomButton = ({ children, ...props }) => (
 
 const Section1 = () => {
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+  // const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const [ref, { height }] = useMeasure();
 
   return (
-    <Box sx={{ width: "100%" }}>
-      {/* Main Background */}
-      <Box sx={{ position: "fixed", zIndex: -10, top: 0, left: 0, right: 0 }}>
-        <img src={hero} alt="hero" style={{ width: "100%", height : "40rem"}} />
+    <Box sx={{ width: "100%", position: "relative" }}>
+      {/* Main Background Video */}
+      <Box
+        sx={{
+          position: "absolute",
+          zIndex: 0,
+          top: 0,
+          left: 0,
+          right: 0,
+          overflow: "hidden",
+        }}
+      >
+        <video
+          src={hero}
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{ width: "100%", height: "40rem", objectFit: "cover" }}
+        />
       </Box>
 
       {/* backgrounds elements */}
@@ -84,7 +99,10 @@ const Section1 = () => {
           [theme.breakpoints.up("md")]: { mt: 6 },
         }}
       >
-        <Stack sx={{ height: "100%" }} justifyContent="center">
+        {/* <Stack
+          sx={{ height: "100%", position: "relative" }}
+          justifyContent="center"
+        >
           <Title
             variant={{ xs: "h3", sm: "h2", md: "h1" }}
             sx={{ letterSpacing: "0.02em", mb: 1 }}
@@ -109,7 +127,7 @@ const Section1 = () => {
               sx={{ height: 58, px: 3 }}
             />
           </Stack>
-        </Stack>
+        </Stack> */}
       </Container>
     </Box>
   );

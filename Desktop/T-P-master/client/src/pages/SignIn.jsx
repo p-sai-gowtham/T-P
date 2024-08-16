@@ -3,10 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
@@ -59,10 +56,24 @@ function Signin() {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         dispatch(login(data.get('email')));
-        console.log({
-            email: memoizedUser, 
-            password: data.get('password'),
-        });
+        fetch("http://127.0.0.1:8000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                reg_no: data.get('email'),
+                password: data.get('password'),
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            }
+        )
     };
 
     useEffect(() => {
@@ -122,10 +133,6 @@ function Signin() {
                             autoComplete="current-password"
                             sx={{ input: { color: '#ffffff' }, label: { color: '#ffffff' } }}
                         />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label={<Typography color="#ffffff">Remember me</Typography>}
-                        />
                         <Button
                             type="submit"
                             fullWidth
@@ -134,18 +141,6 @@ function Signin() {
                         >
                             Sign In
                         </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2" color="#ffffff">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="#" variant="body2" color="#ffffff">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
-                        </Grid>
                     </Box>
                 </Box>
                 <Copyright sx={{ mt: 8, mb: 4 }} />
